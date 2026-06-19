@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — How to Tell Your Congregation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --gold: #C9A84C; --gold-light: #e8d5a0; --ivory: #faf7f0; --text: #1a2a4a; --muted: #5a6a8a; --blue: #1a3a7a; --blue-light: #2a5abc; --green: #4ca078; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); }
+  .page { max-width: 480px; margin: 0 auto; padding: 40px 28px 60px; }
+  .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-bottom: 36px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .logo { width: 120px; height: auto; margin-bottom: 10px; }
+  .guide-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .guide-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.2; }
+  .intro { background: linear-gradient(135deg, rgba(26,58,122,0.06), rgba(201,168,76,0.08)); border: 1px solid rgba(201,168,76,0.25); border-radius: 16px; padding: 18px 20px; margin-bottom: 28px; font-size: 14px; line-height: 1.7; color: var(--text); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--blue); margin-bottom: 14px; margin-top: 28px; }
+  .step { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .step-body { font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .script { background: rgba(26,58,122,0.04); border-left: 3px solid var(--blue-light); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.7; color: var(--text); font-style: italic; }
+  .script strong { font-style: normal; color: var(--blue); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+  .template { background: white; border: 1px dashed rgba(201,168,76,0.4); border-radius: 14px; padding: 16px; margin: 12px 0; }
+  .template-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 10px; }
+  .template-body { font-size: 13px; line-height: 1.8; color: var(--text); }
+  .template-blank { border-bottom: 1px solid var(--muted); display: inline-block; min-width: 100px; color: var(--muted); font-style: italic; }
+  .tip { background: rgba(201,168,76,0.07); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .tip strong { color: var(--text); }
+  .referral-box { background: white; border: 2px dashed rgba(201,168,76,0.4); border-radius: 14px; padding: 16px; margin: 16px 0; }
+  .referral-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 8px; }
+  .referral-note { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 8px; }
+  .divider { text-align: center; margin: 24px 0 18px; position: relative; }
+  .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .divider span { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; background: var(--ivory); padding: 0 14px; position: relative; color: var(--blue); }
+  .next-guide { background: linear-gradient(135deg, rgba(26,58,122,0.08), rgba(201,168,76,0.06)); border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 18px 20px; margin-top: 28px; text-align: center; }
+  .next-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .next-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--blue); }
+  .next-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .cta { background: linear-gradient(135deg, #1a2a4a, #2a3a6a); border-radius: 18px; padding: 24px 22px; text-align: center; margin-top: 28px; }
+  .cta-text { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+  .cta-url { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--gold-light); }
+  .bottom-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-top: 36px; }
+  .footer-note { text-align: center; font-size: 10px; color: var(--muted); margin-top: 14px; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="header">
+    <img src="logo.png" alt="Tithe in Pi" class="logo" />
+    <div class="guide-label">Pioneer Guide 3 of 4</div>
+    <div class="guide-title">How to Tell Your Congregation</div>
+  </div>
+
+  <div class="intro">
+    Your church is listed. Now the people in the pews need to know. This guide gives you everything you need to spread the word — from a Sunday announcement to a WhatsApp message to a one on one conversation.
+  </div>
+
+  <div class="section-title">Your Referral Code — Share This Every Time</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><div class="step-title">Find your referral code</div></div>
+    <div class="step-body">Your Pi username is your referral code. Find it in your Pi Network app profile. When congregation members download Pi and enter your username during signup, your mining rate increases and they start with a head start. Include it in every announcement.</div>
+  </div>
+
+  <div class="referral-box">
+    <div class="referral-label">📎 Your Referral Code</div>
+    <div class="referral-note">Your referral code is your Pi username. Share it verbally, write it on a card, or copy it from your Pi profile to paste into messages. You cannot write on this screen — copy your username from the Pi app and include it wherever you share these templates.</div>
+  </div>
+
+  <div class="divider"><span>Sunday Announcement</span></div>
+
+  <div class="tip"><strong>Keep it to 60 seconds.</strong> Don't explain Pi Network. Don't explain blockchain. Just tell them the church can now receive digital gifts and where to go to give.</div>
+
+  <div class="script">
+    <strong>Sample Sunday announcement</strong>
+    "Quick announcement — our church is now listed on Tithe in Pi, a free global directory for Pioneers who want to give digitally. If you're a Pioneer you can now tithe directly to our church. Open Pi Browser, go to titheinpi7220.pinet.com, search for us, and tap Donate. If you're not a pioneer yet and want to learn more, speak to me after the service. God bless."
+  </div>
+
+  <div class="divider"><span>WhatsApp Message</span></div>
+
+  <div class="template">
+    <div class="template-label">Copy, fill in the blanks, and send to your church group</div>
+    <div class="template-body">
+      🙏 Great news — <span class="template-blank">Church Name</span> is now on Tithe in Pi!<br><br>
+      If you're a Pioneer you can now tithe your Pi directly to our church. Open Pi Browser → go to titheinpi7220.pinet.com → search for us → tap Donate.<br><br>
+      Not a Pioneer yet? Download Pi Network and use my referral code <span class="template-blank">your Pi username</span> when you sign up. It's free and you start earning Pi right away.<br><br>
+      Questions? Message me directly. 🙏
+    </div>
+  </div>
+
+  <div class="tip"><strong>Sharing the link:</strong> Copy titheinpi7220.pinet.com and paste it directly into your WhatsApp message so people can tap it. Remind them it must be opened in Pi Browser — not a regular browser.</div>
+
+  <div class="divider"><span>Church Bulletin</span></div>
+
+  <div class="template">
+    <div class="template-label">For printed or digital church bulletin</div>
+    <div class="template-body">
+      <strong>Digital Giving Now Available</strong><br><br>
+      <span class="template-blank">Church Name</span> now accepts Pi Network donations through Tithe in Pi — a free global directory connecting Pi pioneers with churches.<br><br>
+      To donate: Open Pi Browser → visit titheinpi7220.pinet.com → find our church → tap Donate.<br><br>
+      New to Pi? Download Pi Network and use referral code <span class="template-blank">your Pi username</span> when signing up.<br><br>
+      Questions? Contact <span class="template-blank">your name</span>.
+    </div>
+  </div>
+
+  <div class="divider"><span>One on One</span></div>
+
+  <div class="script">
+    <strong>Talking to someone after service</strong>
+    "You know how you can give to the church by e-transfer or card now? Pi is similar — it's a live digital currency that millions of Christians worldwide have been accumulating. Our church is now set up to receive it. If you have Pi or want to start earning it I can show you how to donate in a few minutes."
+  </div>
+
+  <div class="tip"><strong>The referral moment:</strong> If they want to sign up for Pi, this is when you share your username. "When you download the app enter my username as your referral code — it helps my mining rate and gives you a head start."</div>
+
+  <div class="next-guide">
+    <div class="next-label">Want to build more donor trust? Next step →</div>
+    <div class="next-title">Guide 4 — How to Get Verified</div>
+    <div class="next-desc">Verified churches receive more donations. Learn how to get the verified badge.</div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-text">Open in Pi Browser — must use Pi Browser</div>
+    <div class="cta-url">titheinpi7220.pinet.com</div>
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="footer-note">Tithe in Pi is independent and not affiliated with Pi Network Core Team. 🙏</div>
+</div>
+</body>
+</html>

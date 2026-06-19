@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — How to Get Verified</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --gold: #C9A84C; --gold-light: #e8d5a0; --ivory: #faf7f0; --text: #1a2a4a; --muted: #5a6a8a; --blue: #1a3a7a; --blue-light: #2a5abc; --green: #4ca078; --purple: #9b72cf; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); }
+  .page { max-width: 480px; margin: 0 auto; padding: 40px 28px 60px; }
+  .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-bottom: 36px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .logo { width: 120px; height: auto; margin-bottom: 10px; }
+  .guide-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .guide-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.2; }
+  .intro { background: linear-gradient(135deg, rgba(26,58,122,0.06), rgba(201,168,76,0.08)); border: 1px solid rgba(201,168,76,0.25); border-radius: 16px; padding: 18px 20px; margin-bottom: 28px; font-size: 14px; line-height: 1.7; color: var(--text); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--blue); margin-bottom: 14px; margin-top: 28px; }
+  .badge-card { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 18px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+  .badge-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .badge-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; border: 2px solid; }
+  .listed .badge-dot { background: rgba(107,99,88,0.12); color: var(--muted); border-color: var(--muted); }
+  .piready .badge-dot { background: rgba(26,58,122,0.12); color: var(--blue-light); border-color: var(--blue-light); }
+  .pending .badge-dot { background: rgba(201,168,76,0.12); color: var(--gold); border-color: var(--gold); }
+  .verified .badge-dot { background: rgba(76,160,120,0.12); color: var(--green); border-color: var(--green); }
+  .hv .badge-dot { background: rgba(155,114,207,0.12); color: var(--purple); border-color: var(--purple); }
+  .badge-title { font-size: 15px; font-weight: 600; }
+  .listed .badge-title { color: var(--muted); }
+  .piready .badge-title { color: var(--blue-light); }
+  .pending .badge-title { color: var(--gold); }
+  .verified .badge-title { color: var(--green); }
+  .hv .badge-title { color: var(--purple); }
+  .badge-body { font-size: 13px; line-height: 1.6; color: var(--muted); margin-bottom: 8px; }
+  .badge-action { font-size: 12px; font-weight: 600; color: var(--text); padding-top: 8px; border-top: 1px solid rgba(201,168,76,0.15); }
+  .badge-docs { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+  .step { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .step-body { font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .tip { background: rgba(201,168,76,0.07); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .tip strong { color: var(--text); }
+  .success { background: rgba(76,160,120,0.07); border-left: 3px solid var(--green); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .success strong { color: var(--green); }
+  .faq { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 16px; margin-bottom: 10px; }
+  .faq-q { font-size: 13px; font-weight: 600; color: var(--blue); margin-bottom: 6px; }
+  .faq-a { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .divider { text-align: center; margin: 24px 0 18px; position: relative; }
+  .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .divider span { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; background: var(--ivory); padding: 0 14px; position: relative; color: var(--blue); }
+  .cta { background: linear-gradient(135deg, #1a2a4a, #2a3a6a); border-radius: 18px; padding: 24px 22px; text-align: center; margin-top: 28px; }
+  .cta-text { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 6px; }
+  .cta-url { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--gold-light); margin-bottom: 6px; }
+  .cta-email { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .bottom-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-top: 36px; }
+  .footer-note { text-align: center; font-size: 10px; color: var(--muted); margin-top: 14px; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="header">
+    <img src="logo.png" alt="Tithe in Pi" class="logo" />
+    <div class="guide-label">Pioneer Guide 4 of 4</div>
+    <div class="guide-title">How to Get Verified</div>
+  </div>
+
+  <div class="intro">
+    Verified churches receive more donations. Donors trust verified listings. This guide explains every trust level, what documents you need for each one, and exactly how to submit your proof.
+  </div>
+
+  <div class="section-title">The 5 Trust Levels</div>
+
+  <div class="badge-card listed">
+    <div class="badge-header"><div class="badge-dot">L</div><div class="badge-title">Listed</div></div>
+    <div class="badge-body">Your church is in the directory. Basic information is visible to donors worldwide. No wallet attached yet.</div>
+    <div class="badge-action">How to reach this: Complete registration. Happens automatically.</div>
+  </div>
+
+  <div class="badge-card piready">
+    <div class="badge-header"><div class="badge-dot">P</div><div class="badge-title">Pi-Ready</div></div>
+    <div class="badge-body">Your church has a Pi wallet address. Donors can now send Pi directly to you. This is the minimum level required to receive any donations.</div>
+    <div class="badge-action">How to reach this: Add your Pi wallet address in the onboarding flow. Happens automatically.</div>
+  </div>
+
+  <div class="badge-card pending">
+    <div class="badge-header"><div class="badge-dot">⏳</div><div class="badge-title">Pending Verification</div></div>
+    <div class="badge-body">You have submitted proof that the wallet address belongs to your church. The Tithe in Pi team is reviewing your submission.</div>
+    <div class="badge-action">How to reach this: Submit verification proof — see steps below.</div>
+  </div>
+
+  <div class="badge-card verified">
+    <div class="badge-header"><div class="badge-dot">✓</div><div class="badge-title">Verified</div></div>
+    <div class="badge-body">Your church has been independently verified. Donors can give with full confidence. Verified churches receive significantly more donations than unverified listings.</div>
+    <div class="badge-action">How to reach this: Approved after submitting verification proof — see below.</div>
+  </div>
+
+  <div class="badge-card hv">
+    <div class="badge-header"><div class="badge-dot">★</div><div class="badge-title">Highly Verified</div></div>
+    <div class="badge-body">The highest trust level. Reserved for churches that provide comprehensive documentation. The gold standard in the directory.</div>
+    <div class="badge-action">How to reach this: Contact hello.titheinpi@gmail.com and provide all of the following:</div>
+    <div class="badge-docs">— Charity registration number<br>— Physical church address<br>— Leader name and title<br>— Official charity documentation if available</div>
+  </div>
+
+  <div class="divider"><span>How to Get from Pi-Ready to Verified</span></div>
+
+  <div class="tip"><strong>The core idea:</strong> Post your Pi wallet address publicly on your church's official website or social media. This proves the wallet belongs to your church — not a random individual. The Tithe in Pi team checks the link independently.</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><div class="step-title">Post your wallet address publicly</div></div>
+    <div class="step-body">On your church website or official Facebook page post a message that includes your Pi wallet address. Something simple like: "Our church now accepts Pi donations. Send Pi to: [your wallet address]." The post must be on an official church account — not a personal account.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><div class="step-title">Return to your onboarding page with your PIN</div></div>
+    <div class="step-body">Open Pi Browser, go to titheinpi7220.pinet.com, tap Onboard, and enter your PIN. Find the verification step in your onboarding flow. Select where you posted — website, Facebook, or other social media — and paste the direct link to the post. Tap Submit.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><div class="step-title">Wait for review — usually 2 to 5 days</div></div>
+    <div class="step-body">The Tithe in Pi team independently checks your link and confirms the wallet address matches your listing. Once approved your status upgrades to Verified automatically and you receive an email confirmation at the address you registered with.</div>
+  </div>
+
+  <div class="success"><strong>✓ You are now Verified.</strong> Your listing shows a verified badge. Donors can give with full confidence. You are part of the trusted global faith giving network on Pi.</div>
+
+  <div class="divider"><span>Frequently Asked Questions</span></div>
+
+  <div class="faq">
+    <div class="faq-q">Why does verification matter?</div>
+    <div class="faq-a">Donors are sending real Pi to your church. They want to know it's going to the right place. A verified badge tells them the wallet address has been independently confirmed as belonging to your church.</div>
+  </div>
+
+  <div class="faq">
+    <div class="faq-q">What if we don't have a website or Facebook?</div>
+    <div class="faq-a">A WhatsApp group post showing your wallet address may be accepted as alternative proof. Contact hello.titheinpi@gmail.com before submitting and we will confirm what is acceptable for your situation.</div>
+  </div>
+
+  <div class="faq">
+    <div class="faq-q">I don't have my PIN anymore.</div>
+    <div class="faq-a">Email hello.titheinpi@gmail.com from the address you registered with and we will reset your PIN.</div>
+  </div>
+
+  <div class="faq">
+    <div class="faq-q">How long does verification take?</div>
+    <div class="faq-a">Usually 2 to 5 days. If you haven't heard back after a week please email hello.titheinpi@gmail.com.</div>
+  </div>
+
+  <div class="faq">
+    <div class="faq-q">Can we update our listing later?</div>
+    <div class="faq-a">Yes — return to the Onboard page anytime with your PIN to update your wallet address, contact details, or profile information.</div>
+  </div>
+
+  <div class="faq">
+    <div class="faq-q">Can we remove our listing?</div>
+    <div class="faq-a">Yes — email hello.titheinpi@gmail.com anytime and we will remove it promptly.</div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-text">Questions about verification?</div>
+    <div class="cta-url">titheinpi7220.pinet.com</div>
+    <div class="cta-email">hello.titheinpi@gmail.com</div>
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="footer-note">Tithe in Pi is independent and not affiliated with Pi Network Core Team. 🙏</div>
+</div>
+</body>
+</html>

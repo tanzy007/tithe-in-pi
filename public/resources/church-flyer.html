@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — Church Flyer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #e8d5a0;
+    --ivory: #faf7f0;
+    --warm-white: #fff9f0;
+    --text: #1a2a4a;
+    --muted: #5a6a8a;
+    --blue: #6a9bb5;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ivory);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .page {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+    position: relative;
+  }
+
+  /* Top border accent */
+  .top-bar {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: 36px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .cross {
+    font-size: 28px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 10px;
+    animation: glow 3s ease-in-out infinite;
+  }
+
+  @keyframes glow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; text-shadow: 0 0 20px rgba(201,168,76,0.4); }
+  }
+
+  .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .brand span { color: var(--gold); }
+
+  .tagline {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  /* Intro box */
+  .intro {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(106,155,181,0.06));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .intro p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .intro strong { color: var(--gold); }
+
+  /* Steps */
+  .steps-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 16px 18px;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid rgba(201,168,76,0.15);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .step-num.gold { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .step-num.blue { background: rgba(106,155,181,0.15); color: var(--blue); border: 1px solid rgba(106,155,181,0.3); }
+  .step-num.green { background: rgba(76,160,120,0.12); color: #4ca078; border: 1px solid rgba(76,160,120,0.25); }
+
+  .step-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .step-content p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Why join */
+  .divider {
+    text-align: center;
+    margin: 28px 0 20px;
+    position: relative;
+  }
+
+  .divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .divider span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    background: var(--ivory);
+    padding: 0 16px;
+    position: relative;
+    color: var(--text);
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .benefit {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .benefit-icon { font-size: 22px; margin-bottom: 6px; }
+  .benefit-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .benefit-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, #1a2a4a, #2a3a6a);
+    border-radius: 18px;
+    padding: 28px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15), transparent);
+    border-radius: 50%;
+  }
+
+  .cta-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .cta-url {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  .cta-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 18px;
+  }
+
+  .cta-email {
+    font-size: 12px;
+    color: var(--gold-light);
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-top: 36px;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 16px;
+    opacity: 0.6;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top-bar"></div>
+
+  <div class="header">
+    
+    <img src="logo.png" alt="Tithe in Pi" style="width:140px; height:auto; margin-bottom:8px;" />
+    <div class="tagline">Connecting Pioneers with Churches</div>
+  </div>
+
+  <div class="intro">
+    <p>Over <strong>60 million Pi Network pioneers</strong> worldwide. Many are faithful Christians ready to tithe — but their church isn't set up to receive Pi yet.<br><br>
+    We built a <strong>free global directory</strong> to change that.</p>
+  </div>
+
+  <div class="steps-title">How It Works for Your Church</div>
+
+  <div class="step">
+    <div class="step-num gold">1</div>
+    <div class="step-content">
+      <h3>Register for Free</h3>
+      <p>Add your church to the global directory in minutes. No fees, ever.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num blue">2</div>
+    <div class="step-content">
+      <h3>Add Your Pi Wallet</h3>
+      <p>Connect your ministry's Pi wallet so donors can give directly to you.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num green">3</div>
+    <div class="step-content">
+      <h3>Get Verified</h3>
+      <p>Build donor trust with independent verification. Verified churches receive more donations.</p>
+    </div>
+  </div>
+
+  <div class="divider"><span>Why Join?</span></div>
+
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">🆓</div>
+      <div class="benefit-title">Free Forever</div>
+      <div class="benefit-desc">No listing fees, no commissions</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🌍</div>
+      <div class="benefit-title">Global Reach</div>
+      <div class="benefit-desc">Pioneers in 200+ countries</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔒</div>
+      <div class="benefit-title">Safe & Direct</div>
+      <div class="benefit-desc">Wallet to wallet, we never hold funds</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">📈</div>
+      <div class="benefit-title">Be Early</div>
+      <div class="benefit-desc">First churches gain the most trust</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-label">Register your church at</div>
+    <div class="cta-url">tithe.pi</div>
+    <div class="cta-sub">Open in Pi Browser</div>
+    <div class="cta-email">Questions? hello.titheinpi@gmail.com</div>
+  </div>
+
+  <div class="bottom-bar"></div>

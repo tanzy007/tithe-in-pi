@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — How to Talk to Your Pastor</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --gold: #C9A84C; --gold-light: #e8d5a0; --ivory: #faf7f0; --text: #1a2a4a; --muted: #5a6a8a; --blue: #1a3a7a; --blue-light: #2a5abc; --green: #4ca078; --red: #e05c5c; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); }
+  .page { max-width: 480px; margin: 0 auto; padding: 40px 28px 60px; }
+  .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-bottom: 36px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .logo { width: 120px; height: auto; margin-bottom: 10px; }
+  .guide-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .guide-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.2; }
+  .intro { background: linear-gradient(135deg, rgba(26,58,122,0.06), rgba(201,168,76,0.08)); border: 1px solid rgba(201,168,76,0.25); border-radius: 16px; padding: 18px 20px; margin-bottom: 28px; font-size: 14px; line-height: 1.7; color: var(--text); }
+  .intro strong { color: var(--gold); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--blue); margin-bottom: 14px; margin-top: 28px; }
+  .step { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .step-body { font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .script { background: rgba(26,58,122,0.04); border-left: 3px solid var(--blue-light); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.7; color: var(--text); font-style: italic; }
+  .script strong { font-style: normal; color: var(--blue); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+  .objection { background: white; border-radius: 14px; border: 1px solid rgba(224,92,92,0.15); padding: 16px; margin-bottom: 10px; }
+  .objection-q { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 8px; }
+  .objection-a { font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .tip { background: rgba(201,168,76,0.07); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 16px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .tip strong { color: var(--text); }
+  .next-guide { background: linear-gradient(135deg, rgba(26,58,122,0.08), rgba(201,168,76,0.06)); border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 18px 20px; margin-top: 28px; text-align: center; }
+  .next-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .next-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--blue); }
+  .next-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .divider { text-align: center; margin: 24px 0 18px; position: relative; }
+  .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .divider span { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; background: var(--ivory); padding: 0 14px; position: relative; color: var(--blue); }
+  .cta { background: linear-gradient(135deg, #1a2a4a, #2a3a6a); border-radius: 18px; padding: 24px 22px; text-align: center; margin-top: 28px; }
+  .cta-text { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; line-height: 1.6; }
+  .cta-url { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--gold-light); }
+  .bottom-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-top: 36px; }
+  .footer-note { text-align: center; font-size: 10px; color: var(--muted); margin-top: 14px; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="header">
+    <img src="logo.png" alt="Tithe in Pi" class="logo" />
+    <div class="guide-label">Pioneer Guide 1 of 4</div>
+    <div class="guide-title">How to Talk to Your Pastor</div>
+  </div>
+
+  <div class="intro">
+    You want to tithe your Pi to your church. Your pastor has probably never heard of Pi. This guide gives you everything you need to walk into that conversation with confidence — and walk out with a yes.
+  </div>
+
+  <div class="section-title">Before You Go</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><div class="step-title">Open the app in Pi Browser</div></div>
+    <div class="step-body">This app only works inside Pi Browser — not a regular browser. Open your Pi Network app, tap Pi Browser, and go to <strong>titheinpi7220.pinet.com</strong>. Check if your church is already listed. If it is — great, show your pastor. If not — you're about to change that.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><div class="step-title">Know your one sentence</div></div>
+    <div class="step-body">You don't need to explain blockchain. You don't need to explain crypto. You need one sentence that makes sense to anyone.</div>
+    <div class="script"><strong>Your one sentence</strong>"Pi Network is a digital currency with 60 million members worldwide, built by Stanford graduates. Many of them are Christian and want to tithe — but most churches aren't set up to receive it yet."</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><div class="step-title">Ask for 10 minutes — not a big meeting</div></div>
+    <div class="step-body">Ask for 10 minutes with whoever handles church administration or finances. Low stakes. Low pressure. Just a conversation between a congregation member and their pastor. You don't need to prepare a presentation — the app on your phone is all you need.</div>
+  </div>
+
+  <div class="divider"><span>The Conversation</span></div>
+
+  <div class="section-title">Once You're Sitting Down</div>
+
+  <div class="script"><strong>The opening line — once you're in the meeting</strong>"I want to tithe to the church, but in a currency you've probably never heard of. Can you help me?"</div>
+
+  <div class="tip"><strong>Why this works:</strong> It's disarming and honest. It puts them in the helper role — they can't say no to a congregation member who wants to give. It naturally leads them to ask "what currency?" which is exactly where you want to go.</div>
+
+  <div class="section-title">When They Ask "What Currency?"</div>
+
+  <div class="script"><strong>Your answer</strong>"It's called Pi. It's a live digital currency currently trading on several live exchanges — I can show you a live price chart right now. 60 million people have it, many of them Christian. There's a free app called Tithe in Pi that connects pioneers like me with churches that accept Pi donations. I'd love to show you — it takes about 10 minutes to get your church listed and costs absolutely nothing."</div>
+
+  <div class="section-title">Show Them the App</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><div class="step-title">Open Tithe in Pi on your phone</div></div>
+    <div class="step-body">Open Pi Browser and go to titheinpi7220.pinet.com. Show them the directory. Show them a verified church profile. Show them the donate button. Let the app speak for itself.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><div class="step-title">Paint the picture</div></div>
+    <div class="step-body">"Your church would have a profile here with your name, location, and a donate button. Pioneers worldwide who want to give to a Christian church can find you and send directly to your wallet."</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">3</div><div class="step-title">Make the ask — keep it small</div></div>
+    <div class="script"><strong>The ask</strong>"Registration is completely free and takes about 10 minutes. The church sets up a Pi wallet, gets listed, and when anyone donates it goes directly to you — the platform never touches the funds. Can I help you get set up right now? I have a step by step guide on my phone."</div>
+  </div>
+
+  <div class="divider"><span>If They Say Yes</span></div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">✓</div><div class="step-title">Open Guide 2 and start registering</div></div>
+    <div class="step-body">Go to Guide 2 — How to Register Your Church. You can walk through the whole registration together right there in the meeting. All you need is their church email address and 10 minutes.</div>
+  </div>
+
+  <div class="divider"><span>Handling Objections</span></div>
+
+  <div class="objection">
+    <div class="objection-q">"Is this a scam?"</div>
+    <div class="objection-a">I'm a member of this congregation — I wouldn't bring something here I didn't trust myself. Tithe in Pi is a free directory. Registration costs nothing. Donations go directly from the donor's wallet to yours — nobody in between. You can remove your listing anytime.</div>
+  </div>
+
+  <div class="objection">
+    <div class="objection-q">"What is Pi actually worth?"</div>
+    <div class="objection-a">Pi is a live cryptocurrency trading on several live exchanges right now. Here — I can show you the live price on my phone. Either way it costs the church nothing to be listed and nothing to receive donations.</div>
+  </div>
+
+  <div class="objection">
+    <div class="objection-q">"We'd need to discuss this with the board."</div>
+    <div class="objection-a">Completely understood. There's no pressure and no timeline. Registration will always be free. When you're ready I'm happy to come back and answer any questions the board has — or walk you through it myself.</div>
+  </div>
+
+  <div class="objection">
+    <div class="objection-q">"We don't really use technology like this."</div>
+    <div class="objection-a">Your congregation members handle everything on their end. The church just needs a Pi wallet address — which takes 5 minutes to set up. After that you don't need to do anything. Donations arrive directly to your wallet.</div>
+  </div>
+
+  <div class="objection">
+    <div class="objection-q">"What if the value drops to zero?"</div>
+    <div class="objection-a">Then you've received a gift that cost your church nothing to accept. Any Pi donated to your ministry is real value at today's market price. There's no downside for the church in being listed.</div>
+  </div>
+
+  <div class="tip"><strong>Remember:</strong> You are not selling crypto to your pastor. You are a congregation member trying to give. Lead with that every time and stay there.</div>
+
+  <div class="next-guide">
+    <div class="next-label">They said yes? Next step →</div>
+    <div class="next-title">Guide 2 — How to Register Your Church</div>
+    <div class="next-desc">Walk through registration together right now. Takes 10 minutes.</div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-text">Open in Pi Browser to get started</div>
+    <div class="cta-url">titheinpi7220.pinet.com</div>
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="footer-note">Tithe in Pi is independent and not affiliated with Pi Network Core Team. 🙏</div>
+</div>
+</body>
+</html>

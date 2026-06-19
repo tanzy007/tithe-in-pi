@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — How to Register Your Church</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --gold: #C9A84C; --gold-light: #e8d5a0; --ivory: #faf7f0; --text: #1a2a4a; --muted: #5a6a8a; --blue: #1a3a7a; --blue-light: #2a5abc; --green: #4ca078; --purple: #9b72cf; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); }
+  .page { max-width: 480px; margin: 0 auto; padding: 40px 28px 60px; }
+  .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-bottom: 36px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .logo { width: 120px; height: auto; margin-bottom: 10px; }
+  .guide-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .guide-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.2; }
+  .intro { background: linear-gradient(135deg, rgba(26,58,122,0.06), rgba(201,168,76,0.08)); border: 1px solid rgba(201,168,76,0.25); border-radius: 16px; padding: 18px 20px; margin-bottom: 28px; font-size: 14px; line-height: 1.7; color: var(--text); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--blue); margin-bottom: 14px; margin-top: 28px; }
+  .step { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-num.blue { background: rgba(26,58,122,0.1); border-color: rgba(26,58,122,0.25); color: var(--blue-light); }
+  .step-num.green { background: rgba(76,160,120,0.1); border-color: rgba(76,160,120,0.25); color: var(--green); }
+  .step-num.purple { background: rgba(155,114,207,0.1); border-color: rgba(155,114,207,0.25); color: var(--purple); }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .step-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .step-body { font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .field { background: rgba(26,58,122,0.03); border-radius: 10px; padding: 10px 14px; margin: 8px 0; border: 1px solid rgba(26,58,122,0.08); }
+  .field-name { font-size: 12px; font-weight: 600; color: var(--blue); margin-bottom: 2px; }
+  .field-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .warning { background: rgba(224,92,92,0.06); border-left: 3px solid #e05c5c; border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 16px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .warning strong { color: #c04040; }
+  .tip { background: rgba(201,168,76,0.07); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .tip strong { color: var(--text); }
+  .success { background: rgba(76,160,120,0.07); border-left: 3px solid var(--green); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .success strong { color: var(--green); }
+  .trust-track { display: flex; align-items: center; justify-content: center; gap: 0; margin: 20px 0; flex-wrap: nowrap; }
+  .trust-level { text-align: center; padding: 6px 2px; flex: 1; min-width: 0; }
+  .trust-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; margin: 0 auto 4px; border: 2px solid; }
+  .trust-name { font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; line-height: 1.2; }
+  .trust-arrow { color: var(--muted); font-size: 11px; padding-bottom: 14px; flex-shrink: 0; }
+  .t-listed .trust-dot { background: rgba(107,99,88,0.12); color: var(--muted); border-color: var(--muted); }
+  .t-piready .trust-dot { background: rgba(26,58,122,0.12); color: var(--blue-light); border-color: var(--blue-light); }
+  .t-pending .trust-dot { background: rgba(201,168,76,0.12); color: var(--gold); border-color: var(--gold); }
+  .t-verified .trust-dot { background: rgba(76,160,120,0.12); color: var(--green); border-color: var(--green); }
+  .t-listed .trust-name { color: var(--muted); }
+  .t-piready .trust-name { color: var(--blue-light); }
+  .t-pending .trust-name { color: var(--gold); }
+  .t-verified .trust-name { color: var(--green); }
+  .divider { text-align: center; margin: 24px 0 18px; position: relative; }
+  .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .divider span { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; background: var(--ivory); padding: 0 14px; position: relative; color: var(--blue); }
+  .next-guide { background: linear-gradient(135deg, rgba(26,58,122,0.08), rgba(201,168,76,0.06)); border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 18px 20px; margin-top: 28px; text-align: center; }
+  .next-label { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+  .next-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--blue); }
+  .next-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .cta { background: linear-gradient(135deg, #1a2a4a, #2a3a6a); border-radius: 18px; padding: 24px 22px; text-align: center; margin-top: 28px; }
+  .cta-text { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+  .cta-url { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--gold-light); }
+  .bottom-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-top: 36px; }
+  .footer-note { text-align: center; font-size: 10px; color: var(--muted); margin-top: 14px; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="header">
+    <img src="logo.png" alt="Tithe in Pi" class="logo" />
+    <div class="guide-label">Pioneer Guide 2 of 4</div>
+    <div class="guide-title">How to Register Your Church</div>
+  </div>
+
+  <div class="intro">
+    Your pastor said yes. Now let's get the church listed. This guide walks through every step — from registering the church to adding a wallet to submitting verification proof. The whole process takes about 15 minutes.
+  </div>
+
+  <div class="trust-track">
+    <div class="trust-level t-listed"><div class="trust-dot">L</div><div class="trust-name">Listed</div></div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-piready"><div class="trust-dot">P</div><div class="trust-name">Pi-Ready</div></div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-pending"><div class="trust-dot">⏳</div><div class="trust-name">Pending</div></div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-verified"><div class="trust-dot">✓</div><div class="trust-name">Verified</div></div>
+  </div>
+
+  <div class="section-title">Step 1 — Register the Church</div>
+
+  <div class="tip"><strong>Important:</strong> This app only works inside Pi Browser — not a regular browser. Open your Pi Network app, tap Pi Browser, and go to titheinpi7220.pinet.com.</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">1</div><div class="step-title">Tap Register on the home screen</div></div>
+    <div class="step-body">Navigate to titheinpi7220.pinet.com in Pi Browser and tap Register. Fill in all the fields below with the church administrator or pastor present if possible.</div>
+  </div>
+
+  <div class="field"><div class="field-name">Church Name</div><div class="field-desc">The official name your congregation uses.</div></div>
+  <div class="field"><div class="field-name">Denomination</div><div class="field-desc">Catholic, Baptist, Anglican, Pentecostal, etc. Write Non-Denominational if that applies.</div></div>
+  <div class="field"><div class="field-name">City & Country</div><div class="field-desc">Where the church is physically located.</div></div>
+  <div class="field"><div class="field-name">Email</div><div class="field-desc">A church email address — the Tithe in Pi admin team will send your onboarding PIN here. Use an address the church administrator checks regularly.</div></div>
+  <div class="field"><div class="field-name">Website</div><div class="field-desc">Optional but strongly recommended — makes verification much easier in Step 4.</div></div>
+  <div class="field"><div class="field-name">Description</div><div class="field-desc">One sentence about your church — who you serve and what you're about.</div></div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">2</div><div class="step-title">Submit and wait for your PIN</div></div>
+    <div class="step-body">Tap Submit. Your church appears in the directory immediately as Listed. The Tithe in Pi admin team will send an onboarding PIN to the email you registered with. This is sent manually so allow up to 24 hours — check your inbox and spam folder.</div>
+  </div>
+
+  <div class="success"><strong>✓ You are now Listed.</strong> Your church is visible in the global directory. Check your email for the onboarding PIN to continue.</div>
+
+  <div class="divider"><span>Step 2 — Set Up a Pi Wallet</span></div>
+
+  <div class="tip"><strong>Do this while waiting for your PIN.</strong> The church needs its own Pi wallet to receive donations. This should be controlled by a church leader or administrator — not a volunteer who might leave.</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num blue">1</div><div class="step-title">Open Pi Browser and go to wallet.pi</div></div>
+    <div class="step-body">Inside the Pi Network app tap Pi Browser and type wallet.pi. This is the official Pi wallet where all donations will arrive.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num blue">2</div><div class="step-title">Create the wallet and save your passphrase</div></div>
+    <div class="step-body">Follow the wallet creation steps. When prompted you will receive a 24-word passphrase.</div>
+  </div>
+
+  <div class="warning"><strong>⚠️ Critical — 24-word passphrase</strong><br>Write all 24 words in order on paper. Store it somewhere safe — not on a phone, not in email. This is the only way to recover the wallet if access is ever lost. If it is lost the funds cannot be recovered.</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num blue">3</div><div class="step-title">Copy your wallet address</div></div>
+    <div class="step-body">Once created your wallet shows a long string of letters and numbers — this is your wallet address. It looks like:<br><code style="font-size:11px;word-break:break-all;background:rgba(26,58,122,0.06);padding:4px 6px;border-radius:6px;display:inline-block;margin-top:4px;">GBA2PNDHK4ZZGXYZ7KCXTTYWKX757XARK3...</code><br>Copy it — you will need it in the next step. You can find it again anytime by opening wallet.pi and tapping your address.</div>
+  </div>
+
+  <div class="divider"><span>Step 3 — Complete Onboarding</span></div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num green">1</div><div class="step-title">Enter your PIN on the Onboard page</div></div>
+    <div class="step-body">Once you receive your PIN by email, open Pi Browser, go to titheinpi7220.pinet.com, tap Onboard in the navigation, and enter your PIN. This unlocks your church's private onboarding steps. Keep your PIN safe — you will need it every time you return to update your listing.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num green">2</div><div class="step-title">Paste your Pi wallet address</div></div>
+    <div class="step-body">Paste the wallet address you copied in Step 2. Double check every character — Pi donations are irreversible. A mistake here means donations go to the wrong address and cannot be recovered.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num green">3</div><div class="step-title">Complete your church profile</div></div>
+    <div class="step-body">While in the onboarding flow fill in additional details — leader name and title, physical address, charity registration number if available. The more complete your profile the more trust donors place in your listing. These fields appear in the onboarding steps after wallet entry.</div>
+  </div>
+
+  <div class="success"><strong>✓ You are now Pi-Ready.</strong> Pioneers worldwide can find your church and donate directly to your wallet. This is the minimum needed to start receiving Pi donations.</div>
+
+  <div class="divider"><span>Step 4 — Submit Verification Proof</span></div>
+
+  <div class="tip"><strong>Why bother?</strong> Verified churches receive significantly more donations. Donors trust verified listings. This step takes 5 minutes and makes a real difference. See Guide 4 for full details on all verification levels.</div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num purple">1</div><div class="step-title">Post your wallet address publicly</div></div>
+    <div class="step-body">On your church's official website or Facebook page post a message that includes your Pi wallet address. Something simple like: "Our church now accepts Pi donations. Send Pi to: [your wallet address]." This proves the wallet belongs to your church.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num purple">2</div><div class="step-title">Return to your onboarding page with your PIN</div></div>
+    <div class="step-body">Go back to the Onboard page, enter your PIN, and find the verification step. Select where you posted — website, Facebook, or other social media — and paste the link to the post. Tap Submit.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num purple">3</div><div class="step-title">Wait for review — usually 2 to 5 days</div></div>
+    <div class="step-body">The Tithe in Pi team independently checks your link and confirms the wallet address matches your listing. Once approved your status upgrades to Verified automatically and you receive an email confirmation.</div>
+  </div>
+
+  <div class="success"><strong>✓ You are now Verified.</strong> Your listing shows a verified badge. Donors can give with full confidence.</div>
+
+  <div class="divider"><span>What Happens Next</span></div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">→</div><div class="step-title">Donations arrive automatically</div></div>
+    <div class="step-body">Pi donations go directly to your wallet. Check your balance anytime by opening wallet.pi in Pi Browser. There is nothing to approve — Pi arrives automatically.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header"><div class="step-num">→</div><div class="step-title">Tell your congregation</div></div>
+    <div class="step-body">Your church is listed. Now the people in the pews need to know. Guide 3 has announcement templates and WhatsApp messages ready to use.</div>
+  </div>
+
+  <div class="next-guide">
+    <div class="next-label">Church is listed? Next step →</div>
+    <div class="next-title">Guide 3 — How to Tell Your Congregation</div>
+    <div class="next-desc">Announcement templates, WhatsApp messages, and bulletin notices ready to use.</div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-text">Open in Pi Browser to register</div>
+    <div class="cta-url">titheinpi7220.pinet.com</div>
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="footer-note">Tithe in Pi is independent and not affiliated with Pi Network Core Team. 🙏</div>
+</div>
+</body>
+</html>

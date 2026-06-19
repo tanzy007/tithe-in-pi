@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — Church Onboarding Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --gold: #C9A84C; --gold-light: #e8d5a0; --ivory: #faf7f0; --text: #1a2a4a; --muted: #5a6a8a; --blue: #1a3a7a; --blue-light: #2a5abc; --green: #4ca078; --purple: #9b72cf; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); }
+  .page { max-width: 480px; margin: 0 auto; padding: 40px 28px 60px; }
+  .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-bottom: 36px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .logo { width: 140px; height: auto; margin-bottom: 8px; }
+  .tagline { font-size: 12px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .intro { background: linear-gradient(135deg, rgba(26,58,122,0.06), rgba(201,168,76,0.08)); border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 20px 22px; margin-bottom: 32px; font-size: 14px; line-height: 1.7; }
+  .intro strong { color: var(--gold); }
+  .trust-track { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 32px; padding: 4px 0; flex-wrap: nowrap; width: 100%; }
+  .trust-level { text-align: center; padding: 6px 2px; flex: 1; min-width: 0; }
+  .trust-dot { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; margin: 0 auto 4px; border: 2px solid; }
+  .trust-name { font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; line-height: 1.2; }
+  .trust-arrow { color: var(--muted); font-size: 11px; padding-bottom: 14px; flex-shrink: 0; }
+  .t-listed .trust-dot { background: rgba(107,99,88,0.12); color: var(--muted); border-color: var(--muted); }
+  .t-piready .trust-dot { background: rgba(26,58,122,0.12); color: var(--blue-light); border-color: var(--blue-light); }
+  .t-pending .trust-dot { background: rgba(201,168,76,0.12); color: var(--gold); border-color: var(--gold); }
+  .t-verified .trust-dot { background: rgba(76,160,120,0.12); color: var(--green); border-color: var(--green); }
+  .t-hv .trust-dot { background: rgba(155,114,207,0.12); color: var(--purple); border-color: var(--purple); }
+  .t-listed .trust-name { color: var(--muted); }
+  .t-piready .trust-name { color: var(--blue-light); }
+  .t-pending .trust-name { color: var(--gold); }
+  .t-verified .trust-name { color: var(--green); }
+  .t-hv .trust-name { color: var(--purple); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 16px; margin-top: 28px; color: var(--blue); }
+  .step-card { background: white; border-radius: 16px; border: 1px solid rgba(26,58,122,0.1); padding: 20px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .num-gold { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .num-blue { background: rgba(26,58,122,0.1); color: var(--blue-light); border: 1px solid rgba(26,58,122,0.25); }
+  .num-green { background: rgba(76,160,120,0.12); color: var(--green); border: 1px solid rgba(76,160,120,0.25); }
+  .num-purple { background: rgba(155,114,207,0.12); color: var(--purple); border: 1px solid rgba(155,114,207,0.25); }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .step-sub { font-size: 12px; color: var(--muted); }
+  .step-body { font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .step-body strong { color: var(--text); }
+  .badge-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-gold { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+  .badge-blue { background: rgba(26,58,122,0.1); color: var(--blue-light); border: 1px solid rgba(26,58,122,0.2); }
+  .badge-green { background: rgba(76,160,120,0.1); color: var(--green); border: 1px solid rgba(76,160,120,0.2); }
+  .badge-purple { background: rgba(155,114,207,0.1); color: var(--purple); border: 1px solid rgba(155,114,207,0.2); }
+  .notice { background: rgba(201,168,76,0.07); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 20px 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .notice strong { color: var(--text); }
+  .faq-item { background: white; border-radius: 14px; border: 1px solid rgba(26,58,122,0.08); padding: 16px; margin-bottom: 10px; }
+  .faq-q { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--blue); }
+  .faq-a { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .divider { text-align: center; margin: 28px 0 20px; position: relative; }
+  .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); }
+  .divider span { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; background: var(--ivory); padding: 0 14px; position: relative; color: var(--blue); }
+  .cta { background: linear-gradient(135deg, #1a2a4a, #2a3a6a); border-radius: 18px; padding: 26px 22px; text-align: center; margin-top: 28px; }
+  .cta-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .cta-url { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; color: white; margin-bottom: 6px; }
+  .cta-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .cta-email { font-size: 12px; color: var(--gold-light); }
+  .bottom-bar { width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--gold), var(--blue)); margin-top: 36px; }
+  .footer-note { text-align: center; font-size: 10px; color: var(--muted); margin-top: 14px; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="header">
+    <img src="logo.png" alt="Tithe in Pi" class="logo" />
+    <div class="tagline">Church Onboarding Guide</div>
+  </div>
+
+  <div class="intro">
+    Welcome to Tithe in Pi. This guide walks your church through every step — from first registration to full verification. The whole process is <strong>free</strong> and takes as little as 10 minutes.
+  </div>
+
+  <div class="trust-track">
+    <div class="trust-level t-listed">
+      <div class="trust-dot">L</div>
+      <div class="trust-name">Listed</div>
+    </div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-piready">
+      <div class="trust-dot">P</div>
+      <div class="trust-name">Pi-Ready</div>
+    </div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-pending">
+      <div class="trust-dot">⏳</div>
+      <div class="trust-name">Pending</div>
+    </div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-verified">
+      <div class="trust-dot">✓</div>
+      <div class="trust-name">Verified</div>
+    </div>
+    <div class="trust-arrow">→</div>
+    <div class="trust-level t-hv">
+      <div class="trust-dot">★</div>
+      <div class="trust-name">Highly Verified</div>
+    </div>
+  </div>
+
+  <div class="section-title">The Steps to Verification</div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-gold">1</div>
+      <div>
+        <div class="step-title">Register Your Church</div>
+        <div class="step-sub">Takes 2 minutes · Gets you to Listed status</div>
+      </div>
+    </div>
+    <div class="step-body">
+      Visit Tithe in Pi in the Pi Browser and tap <strong>Register</strong>. Fill in your church name, denomination, city, country, email, website, and a short description. Submit and your church appears in the directory immediately.
+    </div>
+    <div class="badge-row">Status after this step: <span class="badge badge-gold">Listed</span></div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-blue">2</div>
+      <div>
+        <div class="step-title">Set Up Your Pi Wallet</div>
+        <div class="step-sub">Required before receiving donations</div>
+      </div>
+    </div>
+    <div class="step-body">
+      Open the Pi Browser and visit <strong>wallet.pi</strong> to create your ministry's Pi wallet. Write down your <strong>24-word passphrase</strong> and store it somewhere safe and secure — this is the only way to recover your wallet if you lose access. Never share it with anyone. A church leader or administrator should control this wallet.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-blue">3</div>
+      <div>
+        <div class="step-title">Add Your Pi Wallet to Your Listing</div>
+        <div class="step-sub">Enables donations · Gets you to Pi-Ready</div>
+      </div>
+    </div>
+    <div class="step-body">
+      In your church onboarding page, paste your ministry's <strong>Pi wallet address</strong>. This is the address donors will send Pi to directly. Double check it is correct — donations are irreversible. Once saved your status upgrades automatically.
+    </div>
+    <div class="badge-row">Status after this step: <span class="badge badge-blue">Pi-Ready</span></div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-green">4</div>
+      <div>
+        <div class="step-title">Submit Verification Proof</div>
+        <div class="step-sub">Builds donor trust · Gets you to Verified</div>
+      </div>
+    </div>
+    <div class="step-body">
+      Post your Pi wallet address publicly on your church website or official social media page. Then return to your onboarding page and select where you posted. Our team will independently verify the link and upgrade your status within a few days.
+    </div>
+    <div class="badge-row">Status after this step: <span class="badge badge-green">Verified</span></div>
+  </div>
+
+  <div class="notice">
+    <strong>Highly Verified status</strong> is awarded to churches that provide additional documentation such as a charity registration number, physical address, and verified leader information. Contact us if you'd like to pursue this.
+  </div>
+
+  <div class="divider"><span>Frequently Asked Questions</span></div>
+
+  <div class="faq-item">
+    <div class="faq-q">Is there any cost to register?</div>
+    <div class="faq-a">No. Registration, listing, and verification are completely free. Tithe in Pi takes no commission on donations.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Does Tithe in Pi hold our donations?</div>
+    <div class="faq-a">Never. All donations go directly from the donor's Pi wallet to your church's Pi wallet. We are a directory, not a payment processor.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is Pi Network?</div>
+    <div class="faq-a">Pi is a digital currency developed by Stanford graduates with over 60 million members worldwide. Many pioneers are Christians who want to tithe their Pi to their local church.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can we remove our listing later?</div>
+    <div class="faq-a">Yes. Contact us at hello.titheinpi@gmail.com and we will remove your listing promptly.</div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-label">Get started at</div>
+    <div class="cta-url">tithe.pi</div>
+    <div class="cta-sub">Open in Pi Browser</div>
+    <div class="cta-email">Questions? hello.titheinpi@gmail.com</div>
+  </div>
+
+  <div class="bottom-bar"></div>
+  <div class="footer-note">Tithe in Pi is independent and not affiliated with Pi Network Core Team.</div>
+</div>
+</body>
+</html>

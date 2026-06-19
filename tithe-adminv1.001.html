@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tithe in Pi — Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C; --gold-light: #d4b068;
+    --green: #4CAF7D; --red: #E05C5C; --purple: #9B72CF; --blue: #5B9BD5;
+    --bg: #0f0e0c; --bg-card: #1a1814; --bg-sidebar: #141210;
+    --border: #2a2520; --text: #f0ebe0; --muted: #6b6358;
+    --dark: #1a1814;
+  }
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .login-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; width: 360px; text-align: center; }
+  .login-box h1 { font-size: 22px; margin-bottom: 6px; }
+  .login-box p { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+
+  /* APP */
+  #app { display: none; }
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar { width: 220px; background: var(--bg-sidebar); border-right: 1px solid var(--border); padding: 24px 16px; flex-shrink: 0; }
+  .sidebar-logo { font-size: 18px; font-weight: 700; color: var(--gold); margin-bottom: 32px; padding: 0 8px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; cursor: pointer; font-size: 14px; color: var(--muted); margin-bottom: 4px; transition: all 0.15s; }
+  .nav-item:hover, .nav-item.active { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .main { flex: 1; padding: 32px; overflow: auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .page-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .page-sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* TABLE */
+  .toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  th { text-align: left; padding: 12px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 1px solid var(--border); }
+  td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); cursor: pointer; }
+
+  /* BADGES */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-listed { background: rgba(107,99,88,0.15); color: var(--muted); border: 1px solid var(--border); }
+  .badge-pi_ready { background: rgba(91,155,213,0.15); color: var(--blue); border: 1px solid rgba(91,155,213,0.3); }
+  .badge-pending { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .badge-verified { background: rgba(76,175,125,0.15); color: var(--green); border: 1px solid rgba(76,175,125,0.3); }
+  .badge-highly_verified { background: rgba(155,114,207,0.15); color: var(--purple); border: 1px solid rgba(155,114,207,0.3); }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: inherit; }
+  .btn-gold { background: var(--gold); color: var(--dark); }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-green { background: rgba(76,175,125,0.15); color: var(--green); border: 1px solid rgba(76,175,125,0.3); }
+  .btn-green:hover { background: rgba(76,175,125,0.25); }
+  .btn-purple { background: rgba(155,114,207,0.15); color: var(--purple); border: 1px solid rgba(155,114,207,0.3); }
+  .btn-purple:hover { background: rgba(155,114,207,0.25); }
+  .btn-red { background: rgba(224,92,92,0.12); color: var(--red); border: 1px solid rgba(224,92,92,0.25); }
+  .btn-red:hover { background: rgba(224,92,92,0.22); }
+  .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-outline:hover { color: var(--text); border-color: var(--muted); }
+  .btn-sm { padding: 6px 11px; font-size: 12px; }
+
+  /* INPUTS */
+  .input { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; font-family: inherit; outline: none; }
+  .input:focus { border-color: var(--gold); }
+  select.input { cursor: pointer; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; width: 520px; max-width: 95vw; max-height: 85vh; overflow-y: auto; }
+  .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg-card); }
+  .modal-header h2 { font-size: 16px; }
+  .modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 20px 24px; }
+  .detail-row { display: flex; gap: 12px; margin-bottom: 10px; font-size: 13px; }
+  .detail-label { color: var(--muted); width: 110px; flex-shrink: 0; }
+  .detail-value { color: var(--text); flex: 1; word-break: break-all; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .section-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .trust-actions { display: flex; flex-direction: column; gap: 8px; }
+  .pin-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .pin-row input { flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; font-family: inherit; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; z-index: 999; display: none; }
+  .toast-success { background: rgba(76,175,125,0.9); color: white; }
+  .toast-error { background: rgba(224,92,92,0.9); color: white; }
+
+  /* REQUESTS */
+  .request-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .request-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .request-meta { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div style="font-size:32px; margin-bottom:12px;">✟</div>
+    <h1>Tithe in Pi</h1>
+    <p>Admin Panel — Enter your password to continue</p>
+    <div style="margin-bottom:14px;">
+      <input class="input" type="password" id="admin-password" placeholder="Admin password" onkeydown="if(event.key==='Enter') login()">
+    </div>
+    <button class="btn btn-gold" style="width:100%; justify-content:center; padding:12px;" onclick="login()">Sign In</button>
+    <div id="login-error" style="color:var(--red); font-size:12px; margin-top:10px; display:none;">Incorrect password</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="layout">
+    <div class="sidebar">
+      <div class="sidebar-logo">✟ Tithe in Pi</div>
+      <div class="nav-item active" onclick="showSection('churches', this)">⛪ Churches</div>
+      <div class="nav-item" onclick="showSection('requests', this)">📬 Requests</div>
+      <div class="nav-item" onclick="showSection('reports', this)">🚩 Reports</div>
+      <div style="margin-top:auto; padding-top:40px;">
+        <div class="nav-item" onclick="logout()">← Sign Out</div>
+      </div>
+    </div>
+    <div class="main">
+
+      <!-- CHURCHES -->
+      <div id="section-churches" class="page active">
+        <div class="page-title">Churches</div>
+        <div class="page-sub">Manage all registered ministries</div>
+        <div class="stats">
+          <div class="stat-card"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-pending">—</div><div class="stat-label">Pending</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-verified">—</div><div class="stat-label">Verified</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-piready">—</div><div class="stat-label">Pi-Ready</div></div>
+        </div>
+        <div class="toolbar">
+          <input class="input" style="max-width:260px;" type="text" id="search-input" placeholder="Search churches..." oninput="filterTable(this.value)">
+          <select class="input" style="max-width:180px;" onchange="filterByTrust(this.value)">
+            <option value="">All Trust Levels</option>
+            <option value="listed">Listed</option>
+            <option value="pi_ready">Pi-Ready</option>
+            <option value="pending">Pending</option>
+            <option value="verified">Verified</option>
+            <option value="highly_verified">Highly Verified</option>
+          </select>
+          <button class="btn btn-gold" onclick="loadAll()">↻ Refresh</button>
+        </div>
+        <table>
+          <thead><tr><th>Church</th><th>Location</th><th>Trust</th><th>PIN</th><th>Registered</th></tr></thead>
+          <tbody id="churches-tbody"><tr><td colspan="5" style="color:var(--muted); text-align:center;">Loading...</td></tr></tbody>
+        </table>
+      </div>
+
+      <!-- REQUESTS -->
+      <div id="section-requests" class="page">
+        <div class="page-title">Church Requests</div>
+        <div class="page-sub">Pioneers requesting churches be added to the directory</div>
+        <button class="btn btn-gold" onclick="loadRequests()" style="margin-bottom:20px;">↻ Refresh</button>
+        <div id="requests-list"><div style="color:var(--muted);">Loading...</div></div>
+      </div>
+
+      <!-- REPORTS -->
+      <div id="section-reports" class="page">
+        <div class="page-title">Reports</div>
+        <div class="page-sub">Flagged listings from users</div>
+        <button class="btn btn-gold" onclick="loadReports()" style="margin-bottom:20px;">↻ Refresh</button>
+        <div id="reports-list"><div style="color:var(--muted);">Loading...</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="church-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-church-name">Church</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PASSWORD = 'titheadmin0711'
+const SUPABASE_URL = 'https://olfuqxvmcbuohdyyuvyh.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZnVxeHZtY2J1b2hkeXl1dnloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxOTkxMTQsImV4cCI6MjA3OTc3NTExNH0.GaSoAA02WPBl732kzWTSRb6LQFyXbiRRKmAWX78i-mA'
+
+const { createClient } = supabase
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+let allChurches = []
+let currentChurch = null
+
+function login() {
+  const pw = document.getElementById('admin-password').value
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none'
+    document.getElementById('app').style.display = 'block'
+    loadAll()
+  } else {
+    document.getElementById('login-error').style.display = 'block'
+  }
+}
+
+function logout() {
+  document.getElementById('app').style.display = 'none'
+  document.getElementById('login-screen').style.display = 'flex'
+  document.getElementById('admin-password').value = ''
+}
+
+function showSection(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'))
+  document.getElementById('section-' + name).classList.add('active')
+  el.classList.add('active')
+  if (name === 'requests') loadRequests()
+  if (name === 'reports') loadReports()
+}
+
+async function loadAll() {
+  const { data, error } = await db.from('churches').select('*').order('created_at', { ascending: false })
+  if (error) { showToast('Error loading churches: ' + error.message, 'error'); return; }
+  allChurches = data || []
+  document.getElementById('stat-total').textContent = allChurches.length
+  document.getElementById('stat-pending').textContent = allChurches.filter(c => c.trust_level === 'pending').length
+  document.getElementById('stat-verified').textContent = allChurches.filter(c => c.trust_level === 'verified' || c.trust_level === 'highly_verified').length
+  document.getElementById('stat-piready').textContent = allChurches.filter(c => c.trust_level === 'pi_ready').length
+  renderTable(allChurches)
+}
+
+function badge(level) {
+  const labels = { listed: 'Listed', pi_ready: 'Pi-Ready', pending: 'Pending', verified: 'Verified', highly_verified: 'Highly Verified' }
+  return '<span class="badge badge-' + level + '">' + (labels[level] || level) + '</span>'
+}
+
+function fmtDate(d) {
+  if (!d) return '—'
+  return new Date(d).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })
+}
+
+function renderTable(churches) {
+  const tbody = document.getElementById('churches-tbody')
+  if (!churches.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="color:var(--muted); text-align:center; padding:32px;">No churches found</td></tr>'
+    return
+  }
+  tbody.innerHTML = churches.map(c => {
+    return '<tr onclick="openChurch(\'' + c.id + '\')">' +
+      '<td><div style="font-weight:600;">' + c.name + '</div><div style="font-size:11px; color:var(--muted);">' + (c.email || '') + '</div></td>' +
+      '<td style="color:var(--muted);">' + c.city + ', ' + c.country + '</td>' +
+      '<td>' + badge(c.trust_level || 'listed') + '</td>' +
+      '<td style="font-family:monospace; font-size:12px; color:' + (c.onboard_pin ? 'var(--gold)' : 'var(--muted)') + ';">' + (c.onboard_pin || 'Not set') + '</td>' +
+      '<td style="color:var(--muted);">' + fmtDate(c.created_at) + '</td>' +
+      '</tr>'
+  }).join('')
+}
+
+function filterTable(search) {
+  const trust = document.querySelector('select.input').value
+  let filtered = allChurches
+  if (search) filtered = filtered.filter(c => (c.name + c.city + c.country + c.email).toLowerCase().includes(search.toLowerCase()))
+  if (trust) filtered = filtered.filter(c => (c.trust_level || 'listed') === trust)
+  renderTable(filtered)
+}
+
+function filterByTrust(val) {
+  filterTable(document.getElementById('search-input').value)
+}
+
+function openChurch(id) {
+  currentChurch = allChurches.find(c => c.id === id)
+  if (!currentChurch) return
+  const c = currentChurch
+  document.getElementById('modal-church-name').textContent = c.name
+
+  let body = ''
+  body += '<div style="margin-bottom:16px;">' + badge(c.trust_level || 'listed') + '</div>'
+  body += '<div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">' + c.city + ', ' + c.country + '</div></div>'
+  body += '<div class="detail-row"><div class="detail-label">Email</div><div class="detail-value"><a href="mailto:' + c.email + '" style="color:var(--gold)">' + c.email + '</a></div></div>'
+  if (c.website) body += '<div class="detail-row"><div class="detail-label">Website</div><div class="detail-value"><a href="' + c.website + '" target="_blank" style="color:var(--gold)">' + c.website + '</a></div></div>'
+  if (c.denomination) body += '<div class="detail-row"><div class="detail-label">Denomination</div><div class="detail-value">' + c.denomination + '</div></div>'
+  if (c.description) body += '<div class="detail-row"><div class="detail-label">Description</div><div class="detail-value" style="color:var(--muted)">' + c.description + '</div></div>'
+  body += '<div class="divider"></div>'
+  body += '<div class="detail-row"><div class="detail-label">Wallet</div><div class="detail-value" style="font-family:monospace; font-size:12px;">' + (c.wallet_address || '<span style="color:var(--muted)">Not set</span>') + '</div></div>'
+  body += '<div class="detail-row"><div class="detail-label">Confirmed</div><div class="detail-value">' + (c.wallet_confirmed ? '<span style="color:var(--green)">✅ Yes</span>' : '<span style="color:var(--muted)">No</span>') + '</div></div>'
+  body += '<div class="detail-row"><div class="detail-label">Verification</div><div class="detail-value">' + (c.verification_method || '<span style="color:var(--muted)">None</span>') + '</div></div>'
+  if (c.verification_link) {
+    body += '<div class="detail-row"><div class="detail-label">Proof Link</div><div class="detail-value"><a href="' + c.verification_link + '" target="_blank" style="color:var(--gold);word-break:break-all">' + c.verification_link + '</a></div></div>'
+  }
+  if (c.leader_name) body += '<div class="detail-row"><div class="detail-label">Leader</div><div class="detail-value">' + (c.leader_title ? c.leader_title + ' ' : '') + c.leader_name + '</div></div>'
+  if (c.charity_number) body += '<div class="detail-row"><div class="detail-label">Charity No.</div><div class="detail-value">' + c.charity_number + '</div></div>'
+  if (c.physical_address) body += '<div class="detail-row"><div class="detail-label">Address</div><div class="detail-value">' + c.physical_address + '</div></div>'
+  body += '<div class="detail-row"><div class="detail-label">Registered</div><div class="detail-value">' + fmtDate(c.created_at) + '</div></div>'
+  body += '<div class="detail-row"><div class="detail-label">Last Updated</div><div class="detail-value">' + fmtDate(c.last_updated) + '</div></div>'
+  body += '<div class="divider"></div>'
+  body += '<div class="section-label">Onboarding PIN</div>'
+  body += '<div class="detail-row"><div class="detail-label">Current PIN</div><div class="detail-value" style="font-family:monospace; font-size:18px; font-weight:bold; color:var(--gold);">' + (c.onboard_pin || '<span style="color:var(--muted); font-size:13px; font-weight:normal;">Not set</span>') + '</div></div>'
+  body += '<div class="pin-row"><input id="pin-input" type="number" placeholder="Enter PIN to set (min 4 digits)" /><button class="btn btn-gold btn-sm" onclick="setPin()">Set PIN</button></div>'
+  body += '<div class="divider"></div>'
+  body += '<div class="section-label">Set Trust Level</div>'
+  body += '<div class="trust-actions">'
+  body += '<button class="btn btn-green btn-sm" onclick="setTrust(\'verified\')">✅ Approve → Verified</button>'
+  body += '<button class="btn btn-purple btn-sm" onclick="setTrust(\'highly_verified\')">⭐ Approve → Highly Verified</button>'
+  body += '<button class="btn btn-outline btn-sm" onclick="setTrust(\'pi_ready\')">↩ Move back to Pi-Ready</button>'
+  body += '<button class="btn btn-outline btn-sm" onclick="setTrust(\'listed\')">↩ Move back to Listed</button>'
+  body += '<button class="btn btn-red btn-sm" onclick="removeChurch()">🗑 Remove Listing</button>'
+  body += '</div>'
+
+  document.getElementById('modal-body').innerHTML = body
+  document.getElementById('church-modal').classList.add('open')
+}
+
+function closeModal() {
+  document.getElementById('church-modal').classList.remove('open')
+  currentChurch = null
+}
+
+async function setPin() {
+  if (!currentChurch) return
+  const pin = document.getElementById('pin-input').value.trim()
+  if (!pin || pin.length < 4) { showToast('Please enter a valid PIN (minimum 4 digits)', 'error'); return; }
+  const { error } = await db.from('churches').update({ onboard_pin: pin }).eq('id', currentChurch.id)
+  if (error) { showToast('Error: ' + error.message, 'error'); return; }
+  showToast('PIN set: ' + pin, 'success')
+  currentChurch.onboard_pin = pin
+  allChurches = allChurches.map(c => c.id === currentChurch.id ? { ...c, onboard_pin: pin } : c)
+  openChurch(currentChurch.id)
+}
+
+async function setTrust(level) {
+  if (!currentChurch) return
+  const updates = { trust_level: level, last_updated: new Date().toISOString() }
+  if (level === 'verified' || level === 'highly_verified') updates.wallet_confirmed = true
+  const { error } = await db.from('churches').update(updates).eq('id', currentChurch.id)
+  if (error) { showToast('Error: ' + error.message, 'error'); return; }
+  showToast(currentChurch.name + ' updated to ' + level.replace('_', ' '), 'success')
+  closeModal()
+  loadAll()
+}
+
+async function removeChurch() {
+  if (!currentChurch) return
+  if (!confirm('Are you sure you want to remove "' + currentChurch.name + '"? This cannot be undone.')) return
+  const { error } = await db.from('churches').delete().eq('id', currentChurch.id)
+  if (error) { showToast('Error: ' + error.message, 'error'); return; }
+  showToast(currentChurch.name + ' removed', 'success')
+  closeModal()
+  loadAll()
+}
+
+async function loadRequests() {
+  const { data, error } = await db.from('church_requests').select('*').order('created_at', { ascending: false })
+  const el = document.getElementById('requests-list')
+  if (error) { el.innerHTML = '<div style="color:var(--red);">Error: ' + error.message + '</div>'; return; }
+  if (!data || !data.length) { el.innerHTML = '<div style="color:var(--muted);">No requests yet</div>'; return; }
+  el.innerHTML = data.map(r => {
+    return '<div class="request-card">' +
+      '<h3>' + r.church_name + '</h3>' +
+      '<div class="request-meta">' + r.city + ', ' + r.country + (r.website ? ' · <a href="' + r.website + '" target="_blank" style="color:var(--gold)">' + r.website + '</a>' : '') + '</div>' +
+      (r.requester_email ? '<div class="request-meta" style="margin-top:4px;">Requested by: ' + r.requester_email + '</div>' : '') +
+      '<div class="request-meta" style="margin-top:4px;">' + fmtDate(r.created_at) + '</div>' +
+      '</div>'
+  }).join('')
+}
+
+async function loadReports() {
+  const { data, error } = await db.from('church_reports').select('*, churches(name)').order('created_at', { ascending: false })
+  const el = document.getElementById('reports-list')
+  if (error) { el.innerHTML = '<div style="color:var(--red);">Error: ' + error.message + '</div>'; return; }
+  if (!data || !data.length) { el.innerHTML = '<div style="color:var(--muted);">No reports yet</div>'; return; }
+  el.innerHTML = data.map(r => {
+    return '<div class="request-card">' +
+      '<h3>' + (r.churches ? r.churches.name : 'Unknown church') + '</h3>' +
+      '<div class="request-meta">Reason: ' + r.reason.replace('_', ' ') + '</div>' +
+      (r.details ? '<div class="request-meta" style="margin-top:4px;">' + r.details + '</div>' : '') +
+      (r.reporter_email ? '<div class="request-meta" style="margin-top:4px;">Reporter: ' + r.reporter_email + '</div>' : '') +
+      '<div class="request-meta" style="margin-top:4px;">' + fmtDate(r.created_at) + '</div>' +
+      '</div>'
+  }).join('')
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast')
+  t.textContent = msg
+  t.className = 'toast toast-' + (type || 'success')
+  t.style.display = 'block'
+  setTimeout(() => { t.style.display = 'none' }, 3000)
+}
+</script>
+</body>
+</html>
