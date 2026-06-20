@@ -9,15 +9,16 @@ export const BACKEND_CONFIG = {
 } as const;
 
 export const BACKEND_URLS = {
-  LOGIN: `/api/login`,
-  LOGIN_PREVIEW: `/api/login`,
-  GET_PRODUCTS: (appId: string) => `/api/products/${appId}`,
-  GET_PAYMENT: (paymentId: string) => `/api/payments/${paymentId}`,
-  APPROVE_PAYMENT: (paymentId: string) => `/api/payments/${paymentId}/approve`,
-  COMPLETE_PAYMENT: (paymentId: string) => `/api/payments/${paymentId}/complete`,
+  LOGIN: "/api/login",
+  LOGIN_PREVIEW: "/api/login",
+  GET_PRODUCTS: function(appId: string) { return "/api/products/" + appId; },
+  GET_PAYMENT: function(paymentId: string) { return "/api/payments/" + paymentId; },
+  APPROVE_PAYMENT: function(paymentId: string) { return "/api/payments/" + paymentId + "/approve"; },
+  COMPLETE_PAYMENT: function(paymentId: string) { return "/api/payments/" + paymentId + "/complete"; },
 } as const;
 
 export const PI_PLATFORM_URLS = {} as const;
 
 export const PI_BLOCKCHAIN_URLS = {
-  GET_TRANSACTION: (txid: string) =>
+  GET_TRANSACTION: function(txid: string) { return "https://api.testnet.minepi.com/transactions/" + txid + "/effects"; },
+} as const;
