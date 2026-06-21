@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { usePiAuth } from "@/contexts/pi-auth-context";
+import { Heart } from "lucide-react";
 
-export function DonateButton() {
+export function SupportButton() {
   const { isAuthenticated } = usePiAuth();
 
   const handleDonate = () => {
@@ -43,7 +44,8 @@ export function DonateButton() {
   if (!isAuthenticated) return null;
 
   return (
-    <Button onClick={handleDonate} variant="outline" size="sm">
+    <Button onClick={handleDonate} variant="outline" size="sm" className="gap-2">
+      <Heart className="w-4 h-4" />
       Donate Pi
     </Button>
   );

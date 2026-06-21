@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { BookOpen, KeyRound } from "lucide-react"
-import { DonateButton } from "@/components/donate-button"
+import { SupportButton } from "@/components/support-button"
 
 export default function HomePage() {
   return (
@@ -71,7 +71,7 @@ export default function HomePage() {
             <p className="text-xs text-muted-foreground mb-3">
               Help us grow the directory and bring more churches onto Pi Network.
             </p>
-            <DonateButton />
+            <SupportButton />
           </div>
         </main>
       </div>
