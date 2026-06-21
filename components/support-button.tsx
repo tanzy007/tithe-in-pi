@@ -8,7 +8,15 @@ export function SupportButton() {
   const { isAuthenticated } = usePiAuth();
 
   const handleDonate = () => {
-    if (typeof window === "undefined" || !window.Pi) return;
+    console.log("Button clicked");
+    console.log("Window Pi:", typeof window.Pi);
+
+    if (typeof window === "undefined" || !window.Pi) {
+      alert("Pi SDK not available");
+      return;
+    }
+
+    alert("Starting payment...");
 
     window.Pi.createPayment(
       {
@@ -18,6 +26,7 @@ export function SupportButton() {
       },
       {
         onReadyForServerApproval: async (paymentId: string) => {
+          alert("Approving: " + paymentId);
           await fetch("/api/payments/approve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -32,10 +41,10 @@ export function SupportButton() {
           });
         },
         onCancel: (paymentId: string) => {
-          console.log("Payment cancelled", paymentId);
+          alert("Cancelled: " + paymentId);
         },
         onError: (error: Error) => {
-          console.error("Payment error", error);
+          alert("Error: " + error.message);
         },
       }
     );
