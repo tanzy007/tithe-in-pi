@@ -5,7 +5,7 @@ export const PI_NETWORK_CONFIG = {
 
 export const BACKEND_CONFIG = {
   BASE_URL: "",
-  BLOCKCHAIN_BASE_URL: "https://api.testnet.minepi.com",
+  BLOCKCHAIN_BASE_URL: "https://api.minepi.com",
 } as const;
 
 export const BACKEND_URLS = {
@@ -20,5 +20,5 @@ export const BACKEND_URLS = {
 export const PI_PLATFORM_URLS = {} as const;
 
 export const PI_BLOCKCHAIN_URLS = {
-  GET_TRANSACTION: function(txid: string) { return "https://api.testnet.minepi.com/transactions/" + txid + "/effects"; },
+  GET_TRANSACTION: function(txid: string) { return "https://api.minepi.com/transactions/" + txid + "/effects"; },
 } as const;
