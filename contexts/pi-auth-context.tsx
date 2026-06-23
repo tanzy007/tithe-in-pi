@@ -68,4 +68,4 @@ function isInIframe(): boolean {
   }
 }
 
-function parseJsonSafely(value:
+function parseJsonSafely(value: any): any {
