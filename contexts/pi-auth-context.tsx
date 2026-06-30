@@ -227,17 +227,21 @@ export function PiAuthProvider({ children }: { children: ReactNode }) {
     const piAuthResult = await window.Pi.authenticate(
       ["username", "payments"],
       async (payment: unknown) => {
-        alert("Incomplete payment found: " + JSON.stringify(payment));
-        const p = payment as { identifier: string };
+        const p = payment as {
+          identifier: string;
+          transaction?: { txid: string };
+        };
+        const txid = p.transaction?.txid ?? null;
+
         try {
           const res = await fetch("/api/payments/complete", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ paymentId: p.identifier, txid: null }),
+            body: JSON.stringify({ paymentId: p.identifier, txid }),
           });
-          alert("Complete fetch status: " + res.status);
+          console.log("Complete fetch status:", res.status);
         } catch (e) {
-          alert("Failed to resolve: " + (e as Error).message);
+          console.error("Failed to resolve incomplete payment:", e);
         }
       }
     );
