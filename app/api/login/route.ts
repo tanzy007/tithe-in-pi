@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing pi_auth_token" }, { status: 400 });
     }
 
-    // Verify the access token with Pi's API
     const meResponse = await fetch("https://api.minepi.com/v2/me", {
       headers: {
         Authorization: `Bearer ${pi_auth_token}`,
@@ -26,7 +25,6 @@ export async function POST(request: NextRequest) {
 
     const piUser = await meResponse.json();
 
-    // Return a LoginDTO matching what pi-auth-context.tsx expects
     return NextResponse.json({
       id: piUser.uid,
       username: piUser.username,
@@ -35,3 +33,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Login error:", error);
+    return NextResponse.json({ error: "Login failed" }, { status: 500 });
+  }
+}
