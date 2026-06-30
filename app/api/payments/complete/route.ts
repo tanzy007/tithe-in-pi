@@ -22,4 +22,9 @@ export async function POST(request: NextRequest) {
     console.log("Complete status:", response.status);
     console.log("Complete body:", JSON.stringify(data));
 
-    return NextResponse.json(data, { status:
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error("Completion error:", error);
+    return NextResponse.json({ error: "Completion failed" }, { status: 500 });
+  }
+}
