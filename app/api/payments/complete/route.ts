@@ -4,6 +4,8 @@ export async function POST(request: NextRequest) {
   try {
     const { paymentId, txid } = await request.json();
 
+    console.log("Completing paymentId:", paymentId, "txid:", txid);
+
     const response = await fetch(
       `https://api.minepi.com/v2/payments/${paymentId}/complete`,
       {
@@ -17,8 +19,7 @@ export async function POST(request: NextRequest) {
     );
 
     const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error: "Completion failed" }, { status: 500 });
-  }
-}
+    console.log("Complete status:", response.status);
+    console.log("Complete body:", JSON.stringify(data));
+
+    return NextResponse.json(data, { status:
