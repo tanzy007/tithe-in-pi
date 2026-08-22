@@ -44,6 +44,10 @@ export type Church = {
   charity_number: string | null
   physical_address: string | null
   last_updated: string | null
+  // Email verification & PIN
+  email_verified: boolean
+  email_verified_at: string | null
+  onboard_pin: string | null
 }
 
 export const TRUST_LEVEL_ORDER: Record<TrustLevel, number> = {

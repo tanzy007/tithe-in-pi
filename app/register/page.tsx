@@ -36,7 +36,7 @@ export default function RegisterPage() {
     try {
       const supabase = getSupabase()
 
-      // Fix 1: Check for duplicate church
+      // Check for duplicate church
       const { data: existing } = await supabase
         .from("churches")
         .select("id")
@@ -59,10 +59,29 @@ export default function RegisterPage() {
         email: formData.email.trim(),
         trust_level: "listed",
         wallet_confirmed: false,
+        email_verified: false,
         last_updated: new Date().toISOString(),
       }]).select()
 
       if (insertError) throw insertError
+
+      // Send verification email with PIN
+      if (data && data.length > 0) {
+        const churchId = data[0].id
+        const verifyResponse = await fetch('/api/verify-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            churchId,
+            email: formData.email.trim(),
+          }),
+        })
+
+        if (!verifyResponse.ok) {
+          console.error('Failed to send PIN email')
+          // Don't fail registration if email fails - user can request resend
+        }
+      }
 
       setSuccess(true)
     } catch (err) {
@@ -94,7 +113,7 @@ export default function RegisterPage() {
             <div className="bg-card border border-border rounded-xl p-5 text-left mb-6">
               <p className="text-sm font-semibold mb-2">📬 Check your email</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We will send an onboarding PIN to <strong>{formData.email}</strong> within 24 hours. Use that PIN on the Onboarding page to add your Pi wallet and complete your listing.
+                We've sent your onboarding PIN to <strong>{formData.email}</strong>. Check your inbox (and spam folder just in case). Use that PIN on the Onboarding page to add your Pi wallet and complete your listing.
               </p>
             </div>
             <Link href="/onboard" className="inline-flex items-center justify-center w-full h-12 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity">

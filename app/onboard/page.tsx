@@ -42,6 +42,8 @@ export default function OnboardPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState("")
   const [error, setError] = useState("")
+  const [resendLoading, setResendLoading] = useState(false)
+  const [resendSuccess, setResendSuccess] = useState("")
 
   useEffect(() => {
     if (pinVerified && pinChurch) {
@@ -78,6 +80,34 @@ export default function OnboardPage() {
       setPinError("Something went wrong. Please try again.")
     } finally {
       setPinLoading(false)
+    }
+  }
+
+  const resendPin = async () => {
+    if (!pinEntry || pinEntry.length < 4) {
+      setResendSuccess("")
+      return
+    }
+    setResendLoading(true)
+    try {
+      const response = await fetch("/api/resend-pin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: pinEntry.trim() }),
+      })
+
+      if (!response.ok) {
+        setPinError("Could not resend PIN. Please check your PIN and try again.")
+        setResendLoading(false)
+        return
+      }
+
+      setResendSuccess("PIN resent! Check your email.")
+      setTimeout(() => setResendSuccess(""), 4000)
+    } catch (e) {
+      setPinError("Something went wrong. Please try again.")
+    } finally {
+      setResendLoading(false)
     }
   }
 
@@ -189,15 +219,24 @@ export default function OnboardPage() {
               </div>
 
               {pinError && <p className="text-sm text-red-500 text-center">{pinError}</p>}
+              {resendSuccess && <p className="text-sm text-green-500 text-center">{resendSuccess}</p>}
 
               <Button className="w-full h-12" onClick={verifyPin} disabled={pinLoading}>
                 {pinLoading ? "Verifying..." : "Access Onboarding"}
               </Button>
 
+              <Button 
+                variant="outline" 
+                className="w-full h-10" 
+                onClick={resendPin} 
+                disabled={resendLoading || !pinEntry}
+              >
+                {resendLoading ? "Sending..." : "📧 Resend PIN to Email"}
+              </Button>
+
               <p className="text-xs text-muted-foreground text-center">
-                Don't have a PIN? Contact{" "}
-                <span className="text-primary">hello.titheinpi@gmail.com</span>{" "}
-                after registering your church.
+                If you don't see the email, check your spam folder or contact{" "}
+                <span className="text-primary">hello.titheinpi@gmail.com</span>
               </p>
             </div>
           </div>
