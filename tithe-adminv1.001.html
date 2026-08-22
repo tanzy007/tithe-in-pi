@@ -310,7 +310,11 @@ function openChurch(id) {
   body += '<div class="detail-row"><div class="detail-label">Registered</div><div class="detail-value">' + fmtDate(c.created_at) + '</div></div>'
   body += '<div class="detail-row"><div class="detail-label">Last Updated</div><div class="detail-value">' + fmtDate(c.last_updated) + '</div></div>'
   body += '<div class="divider"></div>'
-  body += '<div class="section-label">Onboarding PIN</div>'
+  body += '<div class="section-label">Email Verification & Onboarding PIN</div>'
+  body += '<div class="detail-row"><div class="detail-label">Email Verified</div><div class="detail-value">' + (c.email_verified ? '<span style="color:var(--green)">✅ Yes</span>' : '<span style="color:var(--muted)">No</span>') + '</div></div>'
+  if (c.email_verified_at) {
+    body += '<div class="detail-row"><div class="detail-label">Verified At</div><div class="detail-value">' + fmtDate(c.email_verified_at) + '</div></div>'
+  }
   body += '<div class="detail-row"><div class="detail-label">Current PIN</div><div class="detail-value" style="font-family:monospace; font-size:18px; font-weight:bold; color:var(--gold);">' + (c.onboard_pin || '<span style="color:var(--muted); font-size:13px; font-weight:normal;">Not set</span>') + '</div></div>'
   body += '<div class="pin-row"><input id="pin-input" type="number" placeholder="Enter PIN to set (min 4 digits)" /><button class="btn btn-gold btn-sm" onclick="setPin()">Set PIN</button></div>'
   body += '<div class="divider"></div>'
